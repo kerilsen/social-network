@@ -1,4 +1,5 @@
 const { query } = require("express");
+const { Schema, model } = require("mongoose");
 const reactionSchema = require('./Reaction');
 
 const thoughtSchema = new Schema(
@@ -11,18 +12,22 @@ const thoughtSchema = new Schema(
         },
         createdAt: {
             type: Date,
-            default: Date.now(),
+            default: () => Date.now(),
+            immutable: true
             //     use a getter method to format the timestamp on query
         },
         username: {
             type: String,
             required: true,
-        }
+        },
+        reactions: [reactionSchema],
     }
 )
 
 // reactions(These are like replies)
 //     Array of nested documents created with the reactionSchema
+
+
 
 // Schema Settings:
 //     Create a virtual called reactionCount that retrieves the length of the thought's reactions array field on query

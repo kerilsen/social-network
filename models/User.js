@@ -1,5 +1,7 @@
 const { eachMonthOfInterval } = require("date-fns")
-const { Schema, model } = require("mongoose");
+const { Schema, model, SchemaTypes } = require("mongoose");
+const thoughtSchema = require('./Thought');
+const friendSchema = require('./User');
 
 // Schema to create User model
 const userSchema = new Schema(
@@ -7,25 +9,32 @@ const userSchema = new Schema(
         username: {
             type: String,
             required: true,
-            // unique
+            unique: true,
             // trimmed
         },
         email: {
             type: String,
             required: true,
-            // unique
+            lowercase: true,
+            unique: true,
+            validate: {
+                validator: () => { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value); },
+                message: props => `${props.value} is not a valid email address`
+            }
             // must match valid email address(look into Mongoose's matching validation)
         },
         thoughts: [thoughtSchema],
         //     array of _id values referencing the Thought model
-        friends: [friendSchema],
+        // friends: [friendSchema],
+        friends: [friendSchema]
+        
         //     array of _id values referencing the User model (self-reference)
-    },
-    {
-        toJSON: {
-            getters: true,
-        },
     }
+    // {
+    //     toJSON: {
+    //         getters: true,
+    //     },
+    // }
 );
 
 // Schema Settings:

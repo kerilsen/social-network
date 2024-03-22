@@ -1,7 +1,21 @@
 {
+  "name": "social-network",
+  "description": "The backend for a social network web application where users can share their thoughts, react to friends’ thoughts and create a friend list using Express.js for routing, a MongoDB database and the Mongoose ODM.",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "devStart": "nodemon index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
   "dependencies": {
     "date-fns": "^3.4.0",
     "express": "^4.18.3",
     "mongoose": "^8.2.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.0"
   }
 }
