@@ -1,5 +1,11 @@
 const router = require('express').Router();
 
+const {
+    getAllReactions,
+    createReaction,
+    removeReaction,
+} = require('../../controllers/reactionController.js');
+
 // /api/thoughts/:thoughtId/reactions
 router
 .route('/')

@@ -1,5 +1,12 @@
 const router = require('express').Router();
 
+const {
+getAllThoughts,
+addNewThought,
+editThought,
+removeThought
+} = require('../../controllers/thoughtController.js');
+
 // /api/thoughts
 router
 .route('/')
