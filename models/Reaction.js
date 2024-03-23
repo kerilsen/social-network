@@ -1,4 +1,5 @@
 const { Schema, Types } = require('mongoose');
+const User = require('./User');
 
 const reactionSchema = new Schema(
     {
@@ -12,18 +13,21 @@ const reactionSchema = new Schema(
             maxlength: 280,
             minlength: 1,
         },
-        // link to User model? should this be type: Schema.Types.ObjectId and ref: User instead?
-        // 'getting' the username from the User model?
-        username: {
-            type: String,
-            required: true,
-        },
+        // user: {
+        //     type: Schema.Types.ObjectId,
+        //     ref: User
+        // },
         createdAt: {
             type: Date,
             default: () => Date.now(),
             immutable: true
             // use a getter method to format the timestamp on query
         }
+    },
+    {
+        toJSON: {
+            getters: true,
+        },
     }
 );
 
