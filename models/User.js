@@ -1,7 +1,5 @@
 const { eachMonthOfInterval } = require("date-fns")
-const { Schema, model, SchemaTypes } = require("mongoose");
-const thoughtSchema = require('./Thought');
-const friendSchema = require('./User');
+const { Schema, Types, model } = require("mongoose");
 
 // Schema to create User model
 const userSchema = new Schema(
@@ -10,7 +8,7 @@ const userSchema = new Schema(
             type: String,
             required: true,
             unique: true,
-            // trimmed
+            trim: true
         },
         email: {
             type: String,
@@ -21,24 +19,31 @@ const userSchema = new Schema(
                 validator: () => { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value); },
                 message: props => `${props.value} is not a valid email address`
             }
-            // must match valid email address(look into Mongoose's matching validation)
         },
-        thoughts: [thoughtSchema],
-        //     array of _id values referencing the Thought model
-        // friends: [friendSchema],
-        friends: [friendSchema]
-        
-        //     array of _id values referencing the User model (self-reference)
+        thoughts: [
+            {
+                type: Schema.Types.ObjectId,
+                ref: 'Thought'
+            }
+        ],
+        friends: [
+            {
+                type: Schema.Types.ObjectId, 
+                ref: 'User'
+            }]
+    },
+    {
+        toJSON: {
+            getters: true,
+        },
     }
-    // {
-    //     toJSON: {
-    //         getters: true,
-    //     },
-    // }
 );
 
-// Schema Settings:
-//     Create a virtual called friendCount that retrieves the length of the user's friends array field on query
+userSchema.virtual('friendCount').get(function () {
+    const count = this.friends.length;
+    console.log(`My username is ${this.username} and I have only ${this.friends.length} friends`);
+    return count;
+})
 
 const User = model('user', userSchema);
 

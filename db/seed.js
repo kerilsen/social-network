@@ -1,18 +1,24 @@
+const connection = require('../config/connection');
 const { User } = require('../models/User');
-const mongoose = require('mongoose');
+const { Thought } = require('../models/Thought');
 
-async function seed() {
-const user = await User.create(
-    {
-        username: 'Keri',
-        email: 'keri.l.sen@gmail.com'
-    },
-    {
-        username: 'Kyle',
-        email: 'kyle.cook@gmail.com'
+connection.on('error', (err) => err);
+
+connection.once('open', async () => {
+    console.log('Connected to database');
+
+    // Delete the collections if they exist
+    let thoughtCheck = await connection.db.listCollections({ name: 'thoughts' }).toArray();
+    if (thoughtCheck.length) {
+        await connection.dropCollection('thoughts');
     }
-)
-await user.save();
-console.log(user)
-}
-seed();
+
+    let userCheck = await connection.db.listCollections({ name: 'users' }).toArray();
+    if (userCheck.length) {
+        await connection.dropCollection('users');
+    }
+})
+
+const thoughts = [];
+const users = [];
+module.exports = seed;
