@@ -1,5 +1,4 @@
-const User = require('../models/User')
-const Thought = require('../models/Thought');
+const User = require('../models/User');
 
 // const userCount = async () => {
 //     const numberOfUsers = await User.aggregate().count('userCount');
@@ -24,21 +23,25 @@ module.exports = {
             res.status(500).json(err);
         }
     },
+
     async getProfile(req, res) {
         try {
-
+            const user = await User.findOne({ username: req.params.username })
             res.json(user)
         } catch (err) {
             res.status(500).json(err);
         }
     },
+
     async updateUser(req, res) {
         try {
-const user = await User.updateOne({})
+            const user = await User.findOneAndUpdate({ username: req.params.username }, { $set: { username: req.body } });
+            res.json(user);
         } catch (err) {
             res.status(500).json(err);
         }
     },
+
     async deleteUser(req, res) {
         try {
             const user = await User.findOneAndRemove({ username: req.params.username });
