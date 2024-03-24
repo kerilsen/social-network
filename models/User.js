@@ -20,14 +20,11 @@ const userSchema = new Schema(
                 message: props => `${props.value} is not a valid email address`
             }
         },
-        thoughts: [
-            {
+        thoughts: [{
                 type: Schema.Types.ObjectId,
                 ref: 'Thought'
-            }
-        ],
-        friends: [
-            {
+            }],
+        friends: [{
                 type: Schema.Types.ObjectId, 
                 ref: 'User'
             }]
@@ -38,6 +35,20 @@ const userSchema = new Schema(
         },
     }
 );
+
+userSchema.pre('remove', async function(next) {
+    const username = this.username;
+
+    // Delete associated thoughts
+    await Thought.deleteMany({ username: username });
+
+    await Thought.updateMany(
+        { username: username },
+        { $pull: { reactions: {} }}
+    );
+
+    next();
+})
 
 userSchema.virtual('friendCount').get(function () {
     const count = this.friends.length;
