@@ -15,6 +15,11 @@ const thoughtSchema = new Schema(
             immutable: true
             //     use a getter method to format the timestamp on query
         },
+        username: {
+            type: String,
+            required: true,
+            ref: 'User'
+        },
         reactions: [reactionSchema],
     },
     {

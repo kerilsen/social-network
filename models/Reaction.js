@@ -1,5 +1,4 @@
 const { Schema, Types } = require('mongoose');
-const User = require('./User');
 
 const reactionSchema = new Schema(
     {
@@ -13,10 +12,10 @@ const reactionSchema = new Schema(
             maxlength: 280,
             minlength: 1,
         },
-        // user: {
-        //     type: Schema.Types.ObjectId,
-        //     ref: User
-        // },
+        username: {
+            type: String,
+            required: true
+        },
         createdAt: {
             type: Date,
             default: () => Date.now(),

@@ -1,4 +1,5 @@
 const connection = require('../config/connection');
+const { getUsers, getThoughts } = require('./data');
 const { User } = require('../models/User');
 const { Thought } = require('../models/Thought');
 
@@ -17,8 +18,15 @@ connection.once('open', async () => {
     if (userCheck.length) {
         await connection.dropCollection('users');
     }
-})
 
-const thoughts = [];
-const users = [];
-module.exports = seed;
+    const userData = getUsers();
+    const thoughtData = getThoughts();
+
+    await User.insertMany(userData);
+    await Thought.insertMany(thoughtData);
+
+    console.table(userData);
+    console.table(thoughtData);
+    console.info('Seeding complete! 🌱');
+    process.exit(0);
+})
