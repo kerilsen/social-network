@@ -15,19 +15,19 @@ const userSchema = new Schema(
             required: true,
             lowercase: true,
             unique: true,
-            validate: {
-                validator: () => { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value); },
-                message: props => `${props.value} is not a valid email address`
-            }
+            // validate: {
+            //     validator: () => { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email); },
+            //     message: props => `${props.email} is not a valid email address`
+            // }
         },
-        thoughts: [{
-                type: Schema.Types.ObjectId,
-                ref: 'Thought'
-            }],
-        friends: [{
-                type: Schema.Types.ObjectId, 
-                ref: 'User'
-            }]
+        // thoughts: [{
+        //         type: Schema.Types.ObjectId,
+        //         ref: 'Thought'
+        //     }],
+        // friends: [{
+        //         type: Schema.Types.ObjectId, 
+        //         ref: 'User'
+        //     }]
     },
     {
         toJSON: {
