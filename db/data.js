@@ -142,7 +142,7 @@ const getFriends = (user) => {
         results.push(getRandomArrItem(users))
     }
     // Filter results to make sure the user is not one of them
-    const filter = array.filter(str => str !== user);
+    const filter = results.filter(str => str !== user);
     // Remove duplicate friends from the array
     const unique = [...new Set(filter)];
     return unique;

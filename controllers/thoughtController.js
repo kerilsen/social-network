@@ -9,6 +9,7 @@ module.exports = {
             res.status(500).json(err);
         }
     },
+    
     async addNewThought(req, res) {
         try { 
           const thought = await Thought.create(req.body);
@@ -17,6 +18,7 @@ module.exports = {
             res.status(500).json(err);
         }
     },
+
     async editThought(req, res) {
         try { 
           const thoughts = await Thought.findByIdAndUpdate({ _id: req.params.id }, { $set: { thoughtText: req.body } });
@@ -25,10 +27,13 @@ module.exports = {
             res.status(500).json(err);
         }
     },
+
     async removeThought(req, res) {
         try { 
-            // const thought = await ;
-          res.json(thought);
+            const thought = await Thought.findOneAndRemove({ _id: req.params.id });
+            if (!thought) {
+                return res.status(404).json({ message: 'No such thought exists' });
+            }
         } catch (err) {
             res.status(500).json(err);
         }
