@@ -20,10 +20,13 @@ connection.once('open', async () => {
     }
 
     const userData = getUsers();
-    const thoughtData = getThoughts();
+    // console.table(userData);
 
-    await User.insertMany(userData);
-    await Thought.insertMany(thoughtData);
+    const thoughtData = getThoughts();
+    // console.table(thoughtData);
+
+    // await User.create(userData);
+    // await Thought.create(thoughtData);
 
     console.table(userData);
     console.table(thoughtData);

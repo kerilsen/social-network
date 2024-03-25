@@ -4,7 +4,7 @@ const {
     getAllReactions,
     createReaction,
     removeReaction,
-} = require('../../controllers/reactionController.js');
+} = require('../../controllers/reactionController');
 
 // /api/thoughts/:thoughtId/reactions
 router
