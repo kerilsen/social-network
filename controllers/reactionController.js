@@ -3,7 +3,8 @@ const { Thought } = require('../models');
 module.exports = {
     async getAllReactions(req, res) {
         try {
-            const reactions = await Thought.find({ _id: req.params.id }).populate(reactions);
+            const reactions = await Thought.find(
+                { username: req.params.username }).populate(reactions);
             res.json(reactions);
         } catch (err) {
             res.status(500).json(err);
@@ -11,9 +12,11 @@ module.exports = {
     },
 
     async createReaction(req, res) {
-        const array = await getAllReactions(req, res);
         try {
-            const reaction = await Thought.findOneAndUpdate({ _id: req.params.id }, { reactions: array.push(req.body) });
+            const reaction = await Thought.findOneAndUpdate(
+                { username: req.params.username }, 
+                { $push: { reactions: req.body } }, 
+                { new: true });
             res.json(reaction);
         } catch (err) {
             res.status(500).json(err);
@@ -21,10 +24,11 @@ module.exports = {
     },
 
     async removeReaction(req, res) {
-        const array = await getAllReactions(req, res);
-        const filter = array.filter(str => str !== req.params.username);
         try {
-            const reactions = await Thought.findOneAndUpdate({ _id: req.params.id }, { reactions: filter });
+            const reactions = await Thought.findOneAndUpdate(
+                { username: req.params.username }, 
+                { $pull: { reactions: req.body } },
+                { new: true});
             res.json(reactions)
         } catch (err) {
             res.status(500).json(err);
