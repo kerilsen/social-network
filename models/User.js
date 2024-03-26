@@ -20,14 +20,14 @@ const userSchema = new Schema(
             //     message: props => `${props.email} is not a valid email address`
             // }
         },
-        // thoughts: [{
-        //         type: Schema.Types.ObjectId,
-        //         ref: 'Thought'
-        //     }],
-        // friends: [{
-        //         type: Schema.Types.ObjectId, 
-        //         ref: 'User'
-        //     }]
+        thoughts: {
+                type: Schema.Types.ObjectId,
+                ref: 'thought'
+            },
+        friends:  {
+                type: Schema.Types.ObjectId,
+                ref: 'user'
+            }
     },
     {
         toJSON: {
@@ -50,11 +50,11 @@ userSchema.pre('remove', async function(next) {
     next();
 })
 
-userSchema.virtual('friendCount').get(function () {
-    const count = this.friends.length;
-    console.log(`My username is ${this.username} and I have only ${this.friends.length} friends`);
-    return count;
-})
+// userSchema.virtual('friendCount').get(function () {
+//     const count = this.friends.length;
+//     console.log(`My username is ${this.username} and I have only ${this.friends.length} friends`);
+//     return count;
+// })
 
 const User = model('user', userSchema);
 

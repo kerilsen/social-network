@@ -128,7 +128,7 @@ const getThoughts = () => {
         results.push({
             thoughtText: thoughts[i],
             username: users[i],
-            reactions: [getReactions()]
+            reactions: getReactions()
         })
     }
     return results;
