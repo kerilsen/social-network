@@ -10,11 +10,11 @@ const {
 router
 .route('/')
 .get(getAllFriends)
+.post(addFriend)
 
 // /api/users/:userId/friends/:friendId
 router
 .route('/:friendId')
-.post(addFriend)
 .delete(removeFriend)
 
 module.exports = router;

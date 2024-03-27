@@ -4,18 +4,18 @@ const {
     getAllThoughts,
     addNewThought,
     editThought,
-    removeThought,
+    removeThought
 } = require('../../controllers/thoughtController.js')
 
 // /api/thoughts
 router
     .route('/')
     .get(getAllThoughts)
+    .post(addNewThought)
 
 // /api/thoughts/:thoughtId
 router
     .route('/:thoughtId')
-    .post(addNewThought)
     .put(editThought)
     .delete(removeThought)
 
