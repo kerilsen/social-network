@@ -1,3 +1,5 @@
+// Hardcoded data
+
 const users = [
     'CyberNinja92',
     'PixelPioneer77',
@@ -104,63 +106,4 @@ const reactions = [
     `You're absolutely hitting the nail on the head.`
 ]
 
-// Get a random item given an array
-const getRandomArrItem = (arr) => arr[Math.floor(Math.random() * arr.length)];
-const getRandomInt = (int) => Math.floor(Math.random() * int);
-const getRandomEmail = () => `@${getRandomArrItem(email)}`;
-
-// Randomly get up to 5 reactions per thought
-const getReactions = () => {
-    const results = [];
-    let int = getRandomInt(5);
-    for (let i = 0; i < int; i++) {
-        results.push({
-            reactionBody: getRandomArrItem(reactions),
-            username: getRandomArrItem(users)
-        });
-    }
-    return results;
-}
-
-const getThoughts = () => {
-    const results = [];
-    for (let i = 0; i < thoughts.length; i++) {
-        results.push({
-            thoughtText: thoughts[i],
-            username: users[i],
-            reactions: getReactions()
-        })
-    }
-    return results;
-};
-
-// Get a random number of friends from 0-19 (users.length-1)
-const getFriends = (user) => {
-    const results = [];
-    const int = getRandomInt(users.length - 1)
-    for (let i = 0; i < int; i++) {
-        results.push(getRandomArrItem(users))
-    }
-    // Filter results to make sure the user is not one of them
-    const filter = results.filter(str => str !== user);
-    // Remove duplicate friends from the array
-    const unique = [...new Set(filter)];
-    return unique;
-};
-
-const getUsers = () => {
-    const results = [];
-    for (let i = 0; i < users.length; i++) {
-        results.push({
-            username: users[i],
-            email: `${users[i]}${getRandomEmail()}`,
-            thoughts: thoughts[i],
-            friends: [getFriends(users[i])]
-        })
-    }
-    return results;
-}
-
-// Seed users and email addresses and then seed thoughts 
-
-module.exports = { getUsers, getThoughts };
+module.exports = { users, email, thoughts, reactions };
