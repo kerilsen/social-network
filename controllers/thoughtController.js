@@ -21,16 +21,18 @@ module.exports = {
 
     async editThought(req, res) {
         try { 
-          const thoughts = await Thought.findByIdAndUpdate({ _id: req.params.id }, { $set: { thoughtText: req.body } });
+          const thoughts = await Thought.findOneAndUpdate({ id: req.params.id }, { $set: { thoughtText: req.body.thoughtText, username: req.body.username } }, { new: true });
+          await Thought.save;
           res.json(thoughts);
         } catch (err) {
             res.status(500).json(err);
         }
     },
 
+    // Not working - keeps trying and trying
     async removeThought(req, res) {
         try { 
-            const thought = await Thought.findOneAndRemove({ _id: req.params.id });
+            const thought = await Thought.findOneAndDelete({ id: req.params.id });
             if (!thought) {
                 return res.status(404).json({ message: 'No such thought exists' });
             }
