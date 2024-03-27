@@ -52,7 +52,6 @@ userSchema.pre('remove', async function(next) {
 
 userSchema.virtual('friendCount').get(function () {
     const count = this.friends.length;
-    console.log(`My username is ${this.username} and I have only ${this.friends.length} friends`);
     return count;
 })
 
