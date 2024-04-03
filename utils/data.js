@@ -1,4 +1,4 @@
-// Hardcoded data
+// Hardcoded data for seeding
 
 const users = [
     'CyberNinja92',

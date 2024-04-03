@@ -1,3 +1,4 @@
+const { format } = require('date-fns');
 const { Schema, Types } = require('mongoose');
 
 const reactionSchema = new Schema(
@@ -18,9 +19,8 @@ const reactionSchema = new Schema(
         },
         createdAt: {
             type: Date,
-            default: () => Date.now(),
-            immutable: true
-            // use a getter method to format the timestamp on query
+            default: () => new Date(),
+            immutable: true,
         }
     },
     {
@@ -29,5 +29,10 @@ const reactionSchema = new Schema(
         },
     }
 );
+
+reactionSchema.virtual('formattedTime').get(function() {
+    const timestamp = format(this.createdAt, "h:mmaaa 'on' EEE MMM do, yyyy");
+    return timestamp;
+})
 
 module.exports = reactionSchema;

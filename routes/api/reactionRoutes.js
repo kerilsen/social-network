@@ -10,11 +10,11 @@ const {
 router
 .route('/')
 .get(getAllReactions)
+.post(createReaction)
 
 // /api/thoughts/:thoughtId/reactions/:reactionId
 router
 .route('/:reactionId')
-.post(createReaction)
 .delete(removeReaction)
 
 module.exports = router;
