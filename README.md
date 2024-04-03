@@ -6,15 +6,16 @@
 
   [GitHub repository](https://github.com/kerilsen/social-network)
 
-  [Walkthrough video](https://kerilsen.github.io/social-network)
+  [Walkthrough video](https://drive.google.com/file/d/1yUGn32uDvwmvE6AgomKn8wADACPSIFnN/view)
 
   This is an API for a social network web application where users can share their thoughts, react to friends' thoughts, and create a friend list. I used Express.js for routing, a MongoDB database and the Mongoose ODM as well as the JavaScript date library [date-fns](https://date-fns.org/) to format the timestamps. 
   
   I learned a lot about NoSQL/MongoDB/Mongoose capabilities, but one of my biggest challenges was actually seeding the database with fake social networking data. I spent a lot of time trying to limit reactions to a thought to a user's friends, for instance, when this is something that would be solved in actual practice.
+
   ## Table of Contents
   - [Installation](#installation)
   - [Usage](#usage)
-  - [Contributing](#contributing)
+  - [Credits](#credits)
   - [License](#license)
   - [Tests](#tests)
   - [Questions](#questions)
@@ -27,38 +28,38 @@
 
   ## Usage
 
-  Routes and functionalities:
+  Routes and functionalities are demonstrated in the [walkthrough video](https://drive.google.com/file/d/1yUGn32uDvwmvE6AgomKn8wADACPSIFnN/view) and itemized below:
 
-  /api/users
+  `/api/users`
   GET (Get all users)
   POST (Add new user with `username` and `email` as required fields)
 
-  /api/users/:userId
+  `/api/users/:userId`
   GET (Get a user's profile)
   PUT (Update a user's `username` and/or `email`)
   DELETE (Delete a user)
 
-  /api/users/:userId/friends
+  `/api/users/:userId/friends`
   GET (Get a list of the user's friends)
   POST (Add a friend with `username` as required field)
 
-  /api/users/:userId/friends/:friendId
+  `/api/users/:userId/friends/:friendId`
   DELETE (Remove a friend)
 
-  /api/thoughts
+  `/api/thoughts`
   GET (Get all thoughts)
   POST (Add new thought with `thoughtText` and `username` in the JSON body)
 
-  /api/thoughts/:thoughtId
+  `/api/thoughts/:thoughtId`
   GET (Get a thought)
   PUT (Edit a thought)
   DELETE (Delete a thought)
 
-  /api/thoughts/:thoughtId/reactions
+  `/api/thoughts/:thoughtId/reactions`
   GET (Get all reactions)
   POST (Create a reaction with `reactionBody` as the key)
 
-  /api/thoughts/:thoughtId/reactions/:reactionId
+  `/api/thoughts/:thoughtId/reactions/:reactionId`
   DELETE (Delete a reaction)
 
   ## Credits
