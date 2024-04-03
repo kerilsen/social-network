@@ -1,5 +1,4 @@
-const { eachMonthOfInterval } = require("date-fns")
-const { Schema, Types, model } = require("mongoose");
+const { Schema, model } = require("mongoose");
 
 // Schema to create User model
 const userSchema = new Schema(
@@ -15,10 +14,10 @@ const userSchema = new Schema(
             required: true,
             lowercase: true,
             unique: true,
-            // validate: {
-            //     validator: () => { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email); },
-            //     message: props => `${props.email} is not a valid email address`
-            // }
+            validate: {
+                validator: (email) => { return /^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/.test(email); },
+                message: props => `${props.email} is not a valid email address`
+            }
         },
         thoughts: [{
                 type: Schema.Types.ObjectId,
@@ -36,24 +35,27 @@ const userSchema = new Schema(
     }
 );
 
+// Remove thoughts and reactions associated with a user before deleting the user
 userSchema.pre('remove', async function(next) {
     const username = this.username;
 
     // Delete associated thoughts
     await Thought.deleteMany({ username: username });
 
+    // Delete associated reactions
     await Thought.updateMany(
         { username: username },
-        { $pull: { reactions: {} }}
+        { $pull: { reactions: { username: username } }}
     );
 
     next();
 })
 
+// Virtual method for displaying the number of friends that a user has
 userSchema.virtual('friendCount').get(function () {
     const count = this.friends.length;
     return count;
-})
+});
 
 const User = model('user', userSchema);
 
