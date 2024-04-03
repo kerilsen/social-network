@@ -22,7 +22,7 @@ module.exports = {
 
     async getProfile(req, res) {
         try {
-            const user = await User.findOne({ id: req.params.id });
+            const user = await User.findById(req.params.id);
             res.json(user)
         } catch (err) {
             console.log(err.message);
@@ -58,7 +58,7 @@ module.exports = {
     async getAllFriends(req, res) {
         try {
             const friendList = await User.findOne(
-                { id: req.params.userId }).populate("friends");
+                { _id: req.params.userId }).populate("friends");
             res.json(friendList);
         } catch (err) {
             console.log(err.message);
@@ -84,11 +84,12 @@ module.exports = {
 
     async removeFriend(req, res) {
         try {
-            const deletedFriend = await User.findOneAndUpdate(
-                { userId: req.params.userId },
-                { $pull: { friends: { friendId: req.params.friendId } } },
+            await User.findOneAndUpdate(
+                { _id: req.params.userId },
+                { $pull: { friends: req.params.friendId } },
                 { new: true });
-            res.json(deletedFriend);
+            const friendList = await User.findById(req.params.userId);
+            res.json(friendList);
         } catch (err) {
             console.log(err.message);
             res.status(500).json(err);
