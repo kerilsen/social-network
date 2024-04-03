@@ -11,11 +11,16 @@ addFriend,
 removeFriend
 } = require('../../controllers/userController.js')
 
-// /api/users
+// /api/users/:userId/friends/:friendId
 router
-.route('/')
-.get(getAllUsers)
-.post(addNewUser)
+.route('/:userId/friends/:friendId')
+.delete(removeFriend)
+
+// /api/users/:userId/friends
+router
+.route('/:userId/friends')
+.get(getAllFriends)
+.post(addFriend)
 
 // /api/users/:userID
 router
@@ -24,15 +29,10 @@ router
 .put(updateUser)
 .delete(deleteUser)
 
-// /api/users/:userId/friends
+// /api/users
 router
-.route('/:userId/friends')
-.get(getAllFriends)
-.post(addFriend)
-
-// /api/users/:userId/friends/:friendId
-router
-.route('/:userId/friends/:friendId')
-.delete(removeFriend)
+.route('/')
+.get(getAllUsers)
+.post(addNewUser)
 
 module.exports = router;
